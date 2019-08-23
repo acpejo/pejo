@@ -22,7 +22,7 @@ int main (void)
         }
     }
     while (t==0);
-    F = f * 100 ;
+    F = (f * 1000)/10 ;
     if ( F >= 25)
     {
         c += F / 25;
@@ -30,8 +30,8 @@ int main (void)
     }
     if (F >= 10)
     {
-        c += F /10;
-        F = F %10 ;
+        c += F / 10;
+        F = F % 10 ;
     }
     if (F>=5)
     {
@@ -41,7 +41,6 @@ int main (void)
     if (F>=1)
     {
         c += F /1 ;
-        F = F %1;
     }
     printf("%i\n" , c);
 }
