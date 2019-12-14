@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <cs50.h>
+#include <math.h>
 
 int main (void)
 {
-    int t , F , c=0 ;
+    int  F , c=0 ;
     float f ;
+    bool t;
     // t is a bolean test
     // c is counter
     // f is the cash
@@ -12,31 +14,31 @@ int main (void)
     do
     {
         f = get_float("change:");
-        if (f <= 0)
+        if (f < 0)
         {
-            t = 0 ;
+            t = false ;
         }
         else
         {
-            t = 1;
+            t = true;
         }
     }
-    while (t==0);
-    F = (f * 1000)/10 ;
+    while (t==false);
+    F = round(f*100);//f*100
     if ( F >= 25)
     {
         c += F / 25;
-        F = F % 25 ;
+        F %= 25 ;
     }
     if (F >= 10)
     {
         c += F / 10;
-        F = F % 10 ;
+        F %= 10 ;
     }
     if (F>=5)
     {
         c += F / 5 ;
-        F = F % 5;
+        F %= 5;
     }
     if (F>=1)
     {
