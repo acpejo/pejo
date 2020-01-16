@@ -5,12 +5,8 @@
 
 int main(int argc,string argv[])
 {
-    int j,lenarg=strlen(argv[1]); //j will be disscusd later
-    if (argc ==1)
-    {
-        printf("Usage: ./caesar key\n");
-        return 1;
-    }
+    int j;
+    //j will be disscusd later
     if (argc !=2)
     {
         printf("Usage: ./caesar key\n");
@@ -18,10 +14,11 @@ int main(int argc,string argv[])
     }
     else
     {
+        int lenarg=strlen(argv[1]); 
         for (j=0;j<lenarg;j++)
         { 
             if((int)argv[1][j]>=48 &&(int)argv[1][j]<=57)
-                    //j loop to make sure that thr input string after "caesar" is number
+                    //j loop to make sure that the input string after "caesar" is number.....48-57==0-9
                 continue;
             else
             {
