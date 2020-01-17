@@ -35,7 +35,10 @@ int main(int argc,string argv[])
             i--;
             k++;
             if(k>strlen(plain))
+            {
                 return 0;
+                printf("\n");
+            }
             continue;
         }
         if(isupper(plain[k]))
@@ -55,7 +58,10 @@ int main(int argc,string argv[])
         printf("%c",plain[k]);
         k++;
         if(k>strlen(plain))
-                return 0;
+        {
+            printf("\n");
+            return 0;
+        }
     }
     printf("\n");
 }
