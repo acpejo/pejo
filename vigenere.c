@@ -8,14 +8,14 @@ int main(int argc,string argv[])
     if(argc!=2)
     {
         printf("Usage: ./vigenere keyword\n");
-        return 0;
+        return 1;
     }
     for(int i=0;i<strlen(argv[1]);i++)
     {
         if(! isupper(argv[1][i]) && ! islower(argv[1][i]) )
         {
             printf("Usage: ./vigenere keyword\n");
-            return 0;
+            return 1;
         }
     }
     string plain=get_string("plaintext:  ");
