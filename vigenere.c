@@ -1,59 +1,56 @@
 #include <cs50.h>
 #include <stdio.h>
-#include <ctype.h>
 #include <string.h>
+#include <ctype.h>
 
-
-int main(int argc, string argv[])
+int main(int argc,string argv[])
 {
-    if(argc !=2)
+    if(argc!=2)
     {
         printf("Usage: ./vigenere keyword\n");
+        return 0;
     }
-    else
+    for(int i=0;i<strlen(argv[1]);i++)
     {
-        int vector=strlen(argv[1]);
-        for(int i=0;i<vector;i++)
+        if(! isupper(argv[1][i]) && ! islower(argv[1][i]) )
         {
-            if ((! isupper(argv[1][i])) && (! islower(argv[1][i])) )
-            {
-                printf("Usage: ./vigenere keyword\n");
-                return 0;
-            }
+            printf("Usage: ./vigenere keyword\n");
+            return 0;
         }
-        string plaintext = get_string("plaintext:  ");
-        printf("ciphertext: ");
-        int plainLen=strlen(plaintext),argPlain[plainLen];
-        //plaintext == the first and the real massage
-        //plainLen == length of first and real one
-        //argPlain == the alpha of change of the code
-        //    argv[1][i]-=65;
-         //   else if(plaintext)
-           //     argv[1][i]-=97;
-            //else
-        for(int i=0;i<plainLen;i++)
-        {
-            argPlain[i]=argv[1][i%vector];
-            if(islower(argPlain[i]))
-                argPlain[i]-=97;
-            else
-                argPlain[i]-=65;
-            //vector is the lenght of the argv[1]
-            if(islower(plaintext[i]))
-            {
-                plaintext[i]+=argPlain[i];
-                if(plaintext[i]>122)
-                    plaintext[i]-=26;
-            }
-            else if(isupper(plaintext[i]))
-            {
-                plaintext[i]+=argPlain[i];
-                if(plaintext[i]>90)
-                    plaintext[i]-=26;
-            }
-            
-        }
-        printf("\n");
-        
     }
+    string plain=get_string("plaintext:  ");
+    printf("ciphertext: ");
+    int k=0; //k is a counter of plaintext
+    char argv2[strlen(plain)];
+    for(int i=0;i<strlen(plain);i++)
+    {
+        argv2[i]=argv[1][i%strlen(argv[1])];
+        if(isupper(argv2[i]))
+            argv2[i]-=65;
+        else 
+            argv2[i]-=97;
+        if(! isupper(plain[k]) && ! islower(plain[k]) )
+        {
+            i--;
+            k++;
+            continue;
+        }
+        if(isupper(plain[k]))
+        {
+            plain[k]-=65;
+            plain[k]+=argv2[i];
+            plain[k]%=26;
+            plain[k]+=65;
+        }
+        else
+        {
+            plain[k]-=97;
+            plain[k]+=argv2[i];
+            plain[k]%=26;
+            plain[k]+=97;
+        }
+        printf("%c",plain[k]);
+        k++;
+    }
+    printf("\n");
 }
