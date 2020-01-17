@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <cs5o.h>
+#include <cs50.h>
 
 int main(void)
 {
