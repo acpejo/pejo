@@ -31,8 +31,11 @@ int main(int argc,string argv[])
             argv2[i]-=97;
         if(! isupper(plain[k]) && ! islower(plain[k]) )
         {
+            printf("%c",plain[k]);
             i--;
             k++;
+            if(k>strlen(plain))
+                break;
             continue;
         }
         if(isupper(plain[k]))
@@ -51,6 +54,8 @@ int main(int argc,string argv[])
         }
         printf("%c",plain[k]);
         k++;
+        if(k>strlen(plain))
+                break;
     }
     printf("\n");
 }
