@@ -36,8 +36,8 @@ int main(int argc,string argv[])
             k++;
             if(k>strlen(plain))
             {
-                return 0;
                 printf("\n");
+                return 0;
             }
             continue;
         }
