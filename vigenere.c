@@ -15,13 +15,14 @@ int main(int argc, string argv[])
         int vector=strlen(argv[1]);
         for(int i=0;i<vector;i++)
         {
-            if (! isupper(argv[1][i]) && ! islower(argv[1][i]) )
+            if ((! isupper(argv[1][i])) && (! islower(argv[1][i])) )
             {
                 printf("Usage: ./vigenere keyword\n");
                 return 0;
             }
         }
         string plaintext = get_string("plaintext:  ");
+        printf("ciphertext: ");
         int plainLen=strlen(plaintext),argPlain[plainLen];
         //plaintext == the first and the real massage
         //plainLen == length of first and real one
@@ -40,19 +41,19 @@ int main(int argc, string argv[])
             //vector is the lenght of the argv[1]
             if(islower(plaintext[i]))
             {
-                plaintext[i]+=argPlain[i]%26;
+                plaintext[i]+=argPlain[i];
                 if(plaintext[i]>122)
                     plaintext[i]-=26;
             }
             else if(isupper(plaintext[i]))
             {
-                plaintext[i]+=argPlain[i]%26;
+                plaintext[i]+=argPlain[i];
                 if(plaintext[i]>90)
                     plaintext[i]-=26;
             }
             
         }
-        printf("ciphertext: %s\n",plaintext);
+        printf("\n");
         
     }
 }
