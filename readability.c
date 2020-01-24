@@ -23,6 +23,10 @@ int main(void)
             l++;
         }
     }
+    if (s[strlen(s) - 1] != '!' && s[strlen(s) - 1] != '.' && s[strlen(s) - 1] != '?')
+    {
+        S++;
+    }
     l = l * 100 / w;
     S = S * 100 / w;
     float index = 0.0588 * l - 0.296 * S - 15.8;
