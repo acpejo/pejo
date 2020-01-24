@@ -27,7 +27,7 @@ int main(void)
     S = S * 100 / w;
     float index = 0.0588 * l - 0.296 * S - 15.8;
     int p = round(index);
-    if ((int)(index * 100) % 100 >= 50 && (int)(index * 100) % 100 < 60)
+    if ((int)(index * 100) % 100 >= 50 && (int)(index * 100) % 100 < 55)
     {
         p --; 
     }
