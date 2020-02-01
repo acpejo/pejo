@@ -1,137 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
 #include <string.h>
-#define MAX 9
-
-//number of candidates
-int candidate_count;
-
-//number of voters
-int voter_number;
-
-//important counter used in main and flag
-int j;
-
-// Candidates have name and vote count
-typedef struct
-{
-    string name;
-    int votes;
-}
-candidate;
-
-//array of candidates
-candidate candidates[MAX];
-
-//func prototypes
-bool flag(string name);
-void rank(void);
-
-int main(int argc, string argv[])
-{
-    if (argc < 2)
-    {
-        printf("Usage: tideman [candidate ...]\n");
-        return 1;
-    }
-    candidate_count = argc - 1;
-    if (candidate_count > MAX)
-    {
-        printf("Maximum number of candidates is %i\n", MAX);
-        return 2;
-    }
-
-    for (int i = 0; i < candidate_count; i++)
-    {
-        candidates[i].name = argv[i + 1];
-        candidates[i].votes = 0;
-    }
-
-    voter_number = get_int("Number of voters: ");
-    for (int i = 0; i < voter_number; i++)
-    {
-        for (j = 0; j < candidate_count; j++)
-        {
-            string name = get_string("Rank %i: ", j + 1);
-            if (!flag(name))
-            {
-                printf("Invalid vote.\n");
-                return 3;
-            }
-        }
-        printf("\n");
-    }
-    rank(void);
-}
-
-bool flag(string name)
-{
-    for (int k = 0; k < candidate_count; k++)
-    {
-        if (strcmp(name, candidates[k].name) == 0)
-        {
-            switch (j + 1)
-            {
-                case 9:
-                    candidates[k].votes += candidate_count - 8;
-                    break;
-                case 8:
-                    candidates[k].votes += candidate_count - 7;
-                    break;
-                case 7:
-                    candidates[k].votes += candidate_count - 6;
-                    break;
-                case 6:
-                    candidates[k].votes += candidate_count - 5;
-                    break;
-                case 5:
-                    candidates[k].votes += candidate_count - 4;
-                    break;
-                case 4:
-                    candidates[k].votes += candidate_count - 3;
-                    break;
-                case 3:
-                    candidates[k].votes += candidate_count - 2;
-                    break;
-                case 2:
-                    candidates[k].votes += candidate_count - 1;
-                    break;
-                case 1:
-                    candidates[k].votes += candidate_count;
-            }
-            return true;
-        }
-    }
-    return false;
-}
-
-void rank(void)
-{
-    bool f2;
-    for (int i = 0; i < candidate_count; i++)
-    {
-        f2 = true;
-        for (int k = 0; k < candidate_count; k++)
-        {
-            if (i == k)
-            {
-                continue;
-            }
-            if (candidates[i].votes < candidates[k].votes)
-            {
-                f2 = false;
-            }
-        }
-        if (f2 ==  true)
-        {
-            printf("%s\n", candidates[i].name);
-            return;
-        }
-    }
-}
-
-/*#include <cs50.h>
-#include <stdio.h>
 
 // Max number of candidates
 #define MAX 9
@@ -191,11 +60,12 @@ int main(int argc, string argv[])
     {
         for (int j = 0; j < candidate_count; j++)
         {
+            preferences[i][j] = 0;
             locked[i][j] = false;
         }
     }
 
-    pair_count = 0;
+    pair_count = (candidate_count * candidate_count - 1) / 2;
     int voter_count = get_int("Number of voters: ");
 
     // Query for votes
@@ -217,7 +87,14 @@ int main(int argc, string argv[])
         }
 
         record_preferences(ranks);
-
+        /*for (int ik = 0; ik < candidate_count; ik++)
+        {
+            printf("%i\n", ranks[ik]);
+            for (int iy = 0; iy < candidate_count; iy ++)
+            {
+                printf("%i   ", preferences[ik][iy]);
+            }
+        }*/
         printf("\n");
     }
 
@@ -225,48 +102,124 @@ int main(int argc, string argv[])
     sort_pairs();
     lock_pairs();
     print_winner();
+
+    /*for (int ir = 0; ir < pair_count; ir++)
+        {
+            printf("winner %i\n", pairs[ir].winner);
+            printf("loser%i\n", pairs[ir].loser);
+        }
+        printf("\n");*/
+
+
     return 0;
+
 }
 
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // TODO
+    for (int k = 0; k < candidate_count; k++)
+    {
+        if (strcmp(name, candidates[k]) == 0)
+        {
+            ranks[rank] = k;
+            return true;
+        }
+    }
     return false;
 }
 
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (i < j)
+            {
+                preferences[ranks[i]][ranks[j]]++;
+            }
+        }
+    }
     return;
 }
 
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    // TODO
+    for (int i = 0, k = 0; i < candidate_count; i++, k++)
+    {
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            if (preferences[i][j] > preferences[j][i])
+            {
+                pairs[k].winner = i;
+                pairs[k].loser = j;
+            }
+            else if (preferences[i][j] < preferences[j][i])
+            {
+                pairs[k].winner = j;
+                pairs[k].loser = i;
+            }
+        }
+    }
     return;
 }
 
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // TODO
+    pair t;
+    for (int k = 1; k < pair_count; k++)
+    {
+        if (pairs[k].winner - pairs[k].loser > pairs[k - 1].winner - pairs[k - 1].loser)
+        {
+            t = pairs[k];
+            pairs[k] = pairs[k - 1];
+            pairs[k - 1] = t;
+        }
+    }
     return;
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // TODO
+    for (int i = 0, k = 0; i < candidate_count - 1; i++, k++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (i == pairs[k].winner && j == pairs[k].loser)
+            {
+                locked[i][j] = true;
+            }
+        }
+    }
     return;
 }
 
 // Print the winner of the election
 void print_winner(void)
 {
-    // TODO
+    bool flag;
+    for (int i = 0; i < candidate_count; i++)
+    {
+        flag = true;
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (locked[i][j] == true)
+            {
+                flag = false;
+                continue;
+            }
+        }
+        if (flag == true)
+        {
+            printf("%s\n", candidates[i]);
+            break;
+        }
+    }
     return;
 }
-*/
+
