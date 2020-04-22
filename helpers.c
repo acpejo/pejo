@@ -40,14 +40,22 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
             }
 
             if (green > 255)
+            {
                 image[h][w].rgbtGreen = 255;
+            }
             else
+            {
                 image[h][w].rgbtGreen = green;
+            }
 
             if (blue > 255)
+            {
                 image[h][w].rgbtBlue = 255;
+            }
             else
+            {
                 image[h][w].rgbtBlue = blue;
+            }
         }
     }
     return;
@@ -102,7 +110,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 for (int w1 = w - 1; w1 <= w + 1; w1++)
                 {
                     if (h1 < 0 || h1 >= height || w1 < 0 || w1 >= width)
+                    {
                         continue;
+                    }
                     avgR += red[h1][w1];
                     avgG += green[h1][w1];
                     avgB += blue[h1][w1];
