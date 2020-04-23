@@ -134,15 +134,15 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int w = 0; w < width; w++)
         {
-            for (int h1 = h - 1, i = 0; h1 <= h + 1; h++, i++)
+            for (int h1 = h - 1, i = 0; h1 <= h + 1; h1++, i++)
             {
                 for (int w1 = w - 1, j = 0; w1 <= w + 1; w1++, j++)
                 {
-                    if (w1 < 0 || w1 > width || h1 < 0 || h1 > height)
+                    if (w1 < 0 || w1 >= width || h1 < 0 || h1 >= height)
                     {
                         continue;
                     }
-                    if (w1 == 0 || w1 == width || h1 == 0 || h1 == height)
+                    if (w1 == 0 || w1 == width - 1 || h1 == 0 || h1 == height - 1)
                     {
                         image[h1][w1].rgbtRed = 0;
                         image[h1][w1].rgbtGreen = 0;
