@@ -89,8 +89,6 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
 {
     int red[height][width], green[height][width], blue[height][width];
 
-    int redX, redY, greenX, greenY, blueX, blueY;
-
     //delcare x & y matrix
     int mx[3][3], my[3][3];
 
@@ -134,11 +132,12 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int w = 0; w < width; w++)
         {
-            for (int h1 = h - 1, i = 0; h1 <= h + 1; h++, i++)
+            int redX = 0, redY = 0, greenX = 0, greenY = 0, blueX = 0, blueY = 0;
+            for (int h1 = h - 1, i = 0; h1 <= h + 1; h1++, i++)
             {
                 for (int w1 = w - 1, j = 0; w1 <= w + 1; w1++, j++)
                 {
-                    if (w1 < 0 || w1 > width || h1 < 0 || h1 > height)
+                    if (w1 < 0 || w1 >= width || h1 < 0 || h1 >= height)
                     {
                         continue;
                     }
@@ -152,43 +151,45 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     }
 
                     //else
-                    redX = red[h1][w1] * mx[i][j];
-                    redY = red[h1][w1] * my[i][j];
+                    redX += red[h1][w1] * mx[i][j];
+                    redY += red[h1][w1] * my[i][j];
 
-                    if (sqrt(pow(redX, 2) + pow(redY, 2)) > 255)
-                    {
-                        image[h1][w1].rgbtRed = 255;
-                    }
-                    else
-                    {
-                        image[h1][w1].rgbtRed = sqrt(pow(redX, 2) + pow(redY, 2));
-                    }
+                    greenX += green[h1][w1] * mx[i][j];
+                    greenY += green[h1][w1] * my[i][j];
 
-                    greenX = green[h1][w1] * mx[i][j];
-                    greenY = green[h1][w1] * my[i][j];
-
-                    if (sqrt(pow(greenX, 2) + pow(greenY, 2)) > 255)
-                    {
-                        image[h1][w1].rgbtGreen = 255;
-                    }
-                    else
-                    {
-                        image[h1][w1].rgbtGreen = sqrt(pow(greenX, 2) + pow(greenY, 2));
-                    }
-
-                    blueX = blue[h1][w1] * mx[i][j];
-                    blueY = blue[h1][w1] * my[i][j];
-
-                    if (sqrt(pow(blueX, 2) + pow(blueY, 2)) > 255)
-                    {
-                        image[h1][w1].rgbtBlue = 255;
-                    }
-                    else
-                    {
-                        image[h1][w1].rgbtBlue = sqrt(pow(blueX, 2) + pow(blueY, 2));
-                    }
+                    blueX += blue[h1][w1] * mx[i][j];
+                    blueY += blue[h1][w1] * my[i][j];
                 }
             }
+            if (sqrt(pow(redX, 2) + pow(redY, 2)) > 255)
+            {
+                image[h][w].rgbtRed = 255;
+            }
+            else
+            {
+                image[h][w].rgbtRed = sqrt(pow(redX, 2) + pow(redY, 2));
+            }
+
+
+            if (sqrt(pow(greenX, 2) + pow(greenY, 2)) > 255)
+            {
+                image[h][w].rgbtGreen = 255;
+            }
+            else
+            {
+                image[h][w].rgbtGreen = sqrt(pow(greenX, 2) + pow(greenY, 2));
+            }
+
+
+            if (sqrt(pow(blueX, 2) + pow(blueY, 2)) > 255)
+            {
+                image[h][w].rgbtBlue = 255;
+            }
+            else
+            {
+                image[h][w].rgbtBlue = sqrt(pow(blueX, 2) + pow(blueY, 2));
+            }
+
         }
     }
     return;
