@@ -141,14 +141,14 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     {
                         continue;
                     }
-                    if (w1 == 0 || w1 == width - 1 || h1 == 0 || h1 == height - 1)
-                    {
-                        image[h1][w1].rgbtRed = 0;
-                        image[h1][w1].rgbtGreen = 0;
-                        image[h1][w1].rgbtBlue = 0;
+                    // if (w1 == 0 || w1 == width - 1 || h1 == 0 || h1 == height - 1)
+                    // {
+                    //     image[h1][w1].rgbtRed = 0;
+                    //     image[h1][w1].rgbtGreen = 0;
+                    //     image[h1][w1].rgbtBlue = 0;
 
-                        continue;
-                    }
+                    //     continue;
+                    // }
 
                     //else
                     redX += red[h1][w1] * mx[i][j];
