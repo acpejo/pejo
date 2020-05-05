@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
         if (containJpegHeader)
         {
-            sprintf("filename","%03i.jpg", count);
+            sprintf(filename,"%03i.jpg", count);
             outptr = fopen(filename, "w");
 
         }
