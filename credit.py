@@ -1,4 +1,6 @@
 from cs50 import get_int
+
+
 def main():
     n = get_int("Number: ")
     if flag(n) == True:
@@ -17,6 +19,7 @@ def main():
     else:
         print("INVALID")
 
+
 def flag(number):
     even = odd = tmp = 0
     for x in range(len(str(number))):
@@ -34,5 +37,6 @@ def flag(number):
         return True
     else:
         return False
+
 
 main()
